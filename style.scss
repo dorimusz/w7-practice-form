@@ -119,7 +119,19 @@
     padding-top: 7px;
   }
 
+  .checkbox {
+    display: flex;
+    align-items: center;
+  }
 
+  .checkbox input {
+    order: 1;
+  }
+  .checkbox label {
+    margin: 0;
+    padding-left: 5px;
+    order: 2;
+  }
 
 form div.file {
   position: relative;
