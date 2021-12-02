@@ -1,8 +1,8 @@
 * {
     margin: 0;
     padding: 0;
-    border: 0;
-    outline: none;
+    /* border: 0;
+    outline: none; */
     box-sizing: border-box;
   
     background: transparent;
@@ -35,8 +35,134 @@
     resize: none
   }
   
-  button, input, textarea, select {
+  /* select, input*/
+  button, textarea {
     appearance: none !important;
     -webkit-appearance: none !important;
     border-radius: 0
   }
+
+  body {
+    font-family: 'Rubik', sans-serif;
+    background-color: rgb(241, 239, 235);
+  }
+  
+  div#root {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    /* margin: auto; */
+    width: fit-content;
+    padding: 10px 15px;
+
+    background-color: #fff;
+    
+    border: 1px solid #ced4da;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px #afaeae;
+  }
+
+  #container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    font-size: 17px;
+  }
+
+  .titleContainer {
+    display: flex;
+    justify-content: center;
+  }
+
+  h1 {
+    font-size: 20px;
+    padding: 10px;
+    margin: auto;
+  }
+
+  label {
+    /* display: block; */
+    margin-top: 10px;
+  }
+
+  input[type="text"], input[type="email"], input[type="file"], select {
+      width: 100%;
+      padding: 5px;
+      display: inline-block;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+  }
+
+  input[type="text"]:focus, input[type="email"]:active, input[type="file"]:active {
+      border-color: chocolate;
+  }
+
+  button {
+      margin-top: 20px;
+      margin-bottom: 10px;
+      width: 100%;
+    
+      border-radius: 5px;
+      border: none;
+      line-height: 28px;
+      background-color: burlywood;
+  }
+
+  button:hover {
+      background-color: chocolate;
+      box-shadow: 3px 3px 5px #afaeae;
+  }
+
+  form div {
+    padding-top: 7px;
+  }
+
+
+
+form div.file {
+  position: relative;
+
+  width: 100%;
+  min-height: 60px;
+
+  margin: 20px 0;
+  padding-bottom: 10px;
+
+  background-color: burlywood;
+  border: 1px grey dashed;
+  border-radius: 5px;
+
+  &::after {
+    content: "Kattints vagy húzd ide a fájlodat!";
+    display: block;
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    color: #fff;
+    opacity: 0.6;
+  }
+
+  label {
+    display: block;
+    text-align: center;
+    color: #fff;
+  }
+
+  input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    z-index: 99;
+    opacity: 0;
+  }
+}
+
+#inputValueContent img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+}
