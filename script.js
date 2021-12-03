@@ -131,8 +131,60 @@ const formFields = [
         label: "Elfogadod a felhasználási feltételeket?",
         required: "required"
     }
+];
 
-]
+const selectFields = {
+    type: "select",
+    name: "where",
+    label: "Hol hallottál rólunk?",
+    options: ["internetről", "ismerőstől", "egyéb"]
+};
+
+// const temp = fetch("https://restcountries.com/v3.1/all");
+// console.log(temp);
+
+const processCountries = async () => {
+    const countryRes = await fetch("https://restcountries.com/v3.1/all");
+    const countryArr = await countryRes.json();
+    //console.log(countryArr[0].name.official);
+
+    //kell egy üres tömb
+    let countriesList = [];
+
+    // for ciklussal végig kell menni a country arron és minden országnak a name.officialjét bele kell rakni az üres tömbbe
+    for (const country of countryArr) {
+        //console.log(country);
+        let countryName = country.name.official;
+        //console.log(country.name.official);
+        countriesList.push(countryName);
+        //countriesList += countryName;
+        //console.log(countriesList);
+    }
+    
+    //returnölni a tömböt
+    return countriesList;
+}
+
+const temp = processCountries();
+console.log(temp); //nem a terunrt adja vissza, hanem a promise pendinget - innnen fogom tudni!
+//processCountries();
+
+// const anotherSelectFields = {
+    // type: "select",
+    // name: "countries",
+    // label: "Ország",
+    // options: ["Luxembourg", "Jamaica"]
+    //options: processCountries()
+
+// }
+const anotherSelectFields = async () => { //3. promise
+    return {
+        type: "select",
+        name: "countries",
+        label: "Ország",
+        options: await processCountries()
+    }
+}
 
 /*Még mielőtt kiszerveztem volna külön függvénybe, ami alatta található
 const formElement = `
@@ -150,17 +202,17 @@ const formElement = `
 `;
 */
 
-
-const formElement = (ffs, id) => {
+const formElement = (ffs, id, sel) => {
     let toForm = "";
 
     for (const ff of ffs) {
         toForm += inputElement(ff.type, ff.name, ff.label, ff.required);
     }
+
     return `
         <form id="${id}">
             ${toForm}
-            ${selectElement("select", "where", "Hol hallottál rólunk?", ["internetről", "ismerőstől", "egyéb"])}
+            ${selectElement(sel.type, sel.name, sel.label, sel.options)}
             <button>Ok</button>
         </form>
     `
@@ -209,16 +261,15 @@ const formTitle = `
     </div>
 `;
 
-function loadEvent() {
+async function loadEvent() {
+    const waitAnotherSelectFields = await anotherSelectFields(); //ezért kellett asyncké tenni a függvényt, mert az await nem működik az async nélkül - stringnek nem tudok adni
    const root = document.getElementById("root");
    root.insertAdjacentHTML("beforeend", formTitle);
-   root.insertAdjacentHTML("beforeend", formElement(formFields, "form")); //hozzáadtam a formot a HTML-hez
-   root.insertAdjacentHTML("beforeend", formElement(anotherFormFields, "form2"));
+   root.insertAdjacentHTML("beforeend", formElement(formFields, "form", selectFields)); //hozzáadtam a formot a HTML-hez
+   root.insertAdjacentHTML("beforeend", formElement(anotherFormFields, "form2", waitAnotherSelectFields));
    root.insertAdjacentHTML("beforeend", `
     <div id="inputValueContent"></div> 
    `);
-
-
 
    //Eseménykezelés: ne írja be a queryket az url-be
    const form = document.getElementById("form"); //A submit esemény nem a gombon, hanem a formon hívódik le, ezért a formon kell megragadni
@@ -228,7 +279,6 @@ function loadEvent() {
     for (const input of inputList) {
         input.addEventListener("input", inputEvent)
     }
-
 }
 
 window.addEventListener("load", loadEvent);
