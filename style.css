@@ -65,20 +65,6 @@ div#root {
           box-shadow: 5px 5px 10px #afaeae;
 }
 
-#container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: space-evenly;
-      -ms-flex-pack: space-evenly;
-          justify-content: space-evenly;
-  font-size: 17px;
-}
-
 .titleContainer {
   display: -webkit-box;
   display: -ms-flexbox;
